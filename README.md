@@ -1,5 +1,8 @@
-# etrusted-eventslib.js
-
+## Connect App Events Library
+[![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/trustedshops-public/connect-app-eventslib/blob/main/LICENSE)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
 ## Quick start
 
 ### `Connecting the event library with connector layer`
