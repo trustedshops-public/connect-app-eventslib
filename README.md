@@ -3,6 +3,9 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
+## Public Documentation
+This Events Library is part of Trusted Shop´s SDK for building plugins based on our new plattform and architecture. You can find our detailed documentation publicly available [here](https://developers.etrusted.com/solutions/newgen-sdk/introduction.html). Please follow these instructions to build your own plugin to connect eTrusted products with a shopsoftwaresystem.
+
 ## Quick start
 
 ### `Connecting the event library with connector layer`
