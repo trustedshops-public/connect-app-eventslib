@@ -34,5 +34,8 @@
     "typescript": "4.9.4",
     "webpack": "5.76.0",
     "webpack-cli": "4.10.0"
+  },
+  "dependencies": {
+    "taffydb": "^2.7.3"
   }
 }
