@@ -29,13 +29,10 @@
     "eslint-webpack-plugin": "3.2.0",
     "husky": "8.0.2",
     "jsdoc-babel": "^0.5.0",
-    "jsdoc-to-markdown": "7.1.1",
+    "jsdoc-to-markdown": "^8.0.0",
     "ts-loader": "9.4.2",
     "typescript": "4.9.4",
     "webpack": "5.76.0",
     "webpack-cli": "4.10.0"
-  },
-  "dependencies": {
-    "taffydb": "^2.7.3"
   }
 }
