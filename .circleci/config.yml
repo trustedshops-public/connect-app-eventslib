@@ -10,6 +10,7 @@ orbs:
 anchors:
   deploy_defaults: &deploy_defaults
     attach_workspace: true
+    additional_args: "--exclude *.zip"
     remote: /events/
     pattern: '/events/*'
     context:
