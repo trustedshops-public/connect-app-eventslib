@@ -20,8 +20,7 @@ anchors:
   filter_only_main: &filter_only_main
     filters:
       branches:
-        only:
-          - main
+        only: main
 
 executors:
   building:
@@ -58,7 +57,12 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
       - cloudfront-s3-deploy/sync_and_invalidate:
           name: deploy_to_qa
           <<: *deploy_defaults
@@ -68,13 +72,17 @@ workflows:
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_QA
       #- semantic-release:
       #    <<: *filter_only_main
+      #    requires:
+      #      - build
       - cloudfront-s3-deploy/sync_and_invalidate:
           name: deploy_to_prod
           <<: *deploy_defaults
           bucket_name: ts-connect-prod-trustedshops-app
           distribution_id: E17P53GJGRBTBG
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_PROD
+          requires:
+            - build
           filters:
-            branches:
+            tags:
               only:
-                - never
+                - /.*/
