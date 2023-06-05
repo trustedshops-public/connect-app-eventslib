@@ -34,6 +34,10 @@ workflows:
           name: deploy_to_qa
           bucket_name: ts-connect-qa-trustedshops-app
           distribution_id: E2HC1Y83IARISC
+          aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_QA
+          attach_workspace: true
+          context:
+            - connect-team
           requires:
             - build
           filters:
@@ -44,6 +48,10 @@ workflows:
           name: deploy_to_prod
           bucket_name: ts-connect-prod-trustedshops-app
           distribution_id: E17P53GJGRBTBG
+          aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_PROD
+          attach_workspace: true
+          context:
+            - connect-team
           requires:
             - build
           filters:
