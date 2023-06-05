@@ -8,6 +8,7 @@ orbs:
 anchors:
   deploy_defaults: &deploy_defaults
     attach_workspace: true
+    remote: /events/
     pattern: '/events/*'
     context:
       - connect-team
