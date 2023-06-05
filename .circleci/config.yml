@@ -5,6 +5,15 @@ orbs:
   node: circleci/node@5.1.0
   cloudfront-s3-deploy: trustedshops-public/cloudfront-s3-deploy@3.0.0
 
+anchors:
+  deploy_defaults: &deploy_defaults
+    attach_workspace: true
+    pattern: '/events/*'
+    context:
+      - connect-team
+    requires:
+      - build
+
 executors:
   building:
     docker:
@@ -32,28 +41,20 @@ workflows:
       - build
       - cloudfront-s3-deploy/sync_and_invalidate:
           name: deploy_to_qa
+          <<: *deploy_defaults
           bucket_name: ts-connect-qa-trustedshops-app
           distribution_id: E2HC1Y83IARISC
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_QA
-          attach_workspace: true
-          context:
-            - connect-team
-          requires:
-            - build
           filters:
             branches:
               only:
                 - main
       - cloudfront-s3-deploy/sync_and_invalidate:
           name: deploy_to_prod
+          <<: *deploy_defaults
           bucket_name: ts-connect-prod-trustedshops-app
           distribution_id: E17P53GJGRBTBG
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_PROD
-          attach_workspace: true
-          context:
-            - connect-team
-          requires:
-            - build
           filters:
             branches:
               only:
