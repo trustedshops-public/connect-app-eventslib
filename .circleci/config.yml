@@ -51,6 +51,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - semantic-release/install
       - semantic-release/execute
 
 workflows:
