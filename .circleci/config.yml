@@ -70,10 +70,19 @@ workflows:
           bucket_name: ts-connect-qa-trustedshops-app
           distribution_id: E2HC1Y83IARISC
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_QA
-      #- semantic-release:
-      #    <<: *filter_only_main
-      #    requires:
-      #      - build
+      - semantic-release:
+          <<: *filter_only_main
+          requires:
+            - build
+          context:
+            - semantic-release
+      - approve_deploy_to_prod:
+          type: approval
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
       - cloudfront-s3-deploy/sync_and_invalidate:
           name: deploy_to_prod
           <<: *deploy_defaults
@@ -82,6 +91,7 @@ workflows:
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_PROD
           requires:
             - build
+            - approve_deploy_to_prod
           filters:
             tags:
               only: /.*/
