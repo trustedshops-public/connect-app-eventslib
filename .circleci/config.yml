@@ -4,6 +4,8 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.4
   node: circleci/node@5.1.0
   cloudfront-s3-deploy: trustedshops-public/cloudfront-s3-deploy@3.0.0
+  semantic-release: trustedshops-public/semantic-release@5.0.0
+  deterministic-zip: timo-reymann/deterministic-zip@1.0.0
 
 anchors:
   deploy_defaults: &deploy_defaults
@@ -14,6 +16,11 @@ anchors:
       - connect-team
     requires:
       - build
+  filter_only_main: &filter_only_main
+    filters:
+      branches:
+        only:
+          - main
 
 executors:
   building:
@@ -27,13 +34,24 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+      - deterministic-zip/install
       - run:
           name: Build library
           command: yarn build
+      - deterministic-zip/zip:
+          source: dist/
+          target: dist/lib.zip
       - persist_to_workspace:
           root: .
           paths:
             - dist/
+  semantic-release:
+    executor: semantic-release/default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - semantic-release/execute
 
 workflows:
   version: 2
@@ -43,13 +61,12 @@ workflows:
       - cloudfront-s3-deploy/sync_and_invalidate:
           name: deploy_to_qa
           <<: *deploy_defaults
+          <<: *filter_only_main
           bucket_name: ts-connect-qa-trustedshops-app
           distribution_id: E2HC1Y83IARISC
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_QA
-          filters:
-            branches:
-              only:
-                - main
+      #- semantic-release:
+      #    <<: *filter_only_main
       - cloudfront-s3-deploy/sync_and_invalidate:
           name: deploy_to_prod
           <<: *deploy_defaults
