@@ -45,7 +45,7 @@ jobs:
           root: .
           paths:
             - dist/
-  semantic-release:
+  semantic_release:
     executor: semantic-release/default
     steps:
       - checkout
@@ -71,10 +71,18 @@ workflows:
           bucket_name: ts-connect-qa-trustedshops-app
           distribution_id: E2HC1Y83IARISC
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_QA
-      - semantic-release:
+      - approve_semantic_release:
+          type: approval
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /.*/
+      - semantic_release:
           <<: *filter_only_main
           requires:
             - build
+            - approve_semantic_release
           context:
             - semantic-release
       - approve_deploy_to_prod:
