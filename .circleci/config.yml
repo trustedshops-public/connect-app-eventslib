@@ -72,12 +72,8 @@ workflows:
           distribution_id: E2HC1Y83IARISC
           aws_iam_web_identity_role_arn: $WEB_IDENTITY_ROLE_ARN_QA
       - approve_semantic_release:
+          <<: *filter_only_main
           type: approval
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              only: /.*/
       - semantic_release:
           <<: *filter_only_main
           requires:
