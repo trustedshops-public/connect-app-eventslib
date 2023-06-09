@@ -38,9 +38,11 @@ jobs:
       - run:
           name: Build library
           command: yarn build
-      - deterministic-zip/zip:
-          source: dist/
-          target: dist/lib.zip
+      - run:
+          name: Bundle dist folder to zip archive
+          command: |
+            cd dist/
+            deterministic-zip -r lib.zip *
       - persist_to_workspace:
           root: .
           paths:
