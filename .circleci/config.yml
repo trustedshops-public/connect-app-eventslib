@@ -1,10 +1,10 @@
 version: 2.1
 
 orbs:
-  aws-cli: circleci/aws-cli@3.1.4
+  aws-cli: circleci/aws-cli@3.1.5
   node: circleci/node@5.1.0
   cloudfront-s3-deploy: trustedshops-public/cloudfront-s3-deploy@3.0.0
-  semantic-release: trustedshops-public/semantic-release@5.0.0
+  semantic-release: trustedshops-public/semantic-release@5.1.0
   deterministic-zip: timo-reymann/deterministic-zip@1.0.0
 
 anchors:
@@ -25,7 +25,7 @@ anchors:
 executors:
   building:
     docker:
-      - image: cimg/node:18.12
+      - image: cimg/node:18.16
 
 jobs:
   build:
