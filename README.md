@@ -4,6 +4,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_connect-app-eventslib&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_connect-app-eventslib)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/trustedshops-public/connect-app-eventslib/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/trustedshops-public/connect-app-eventslib/tree/main)
 
 ## Public Documentation
 
