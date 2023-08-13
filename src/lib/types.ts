@@ -1,4 +1,4 @@
-import { EVENTS } from './eventsList';
+import { EVENTS } from "./eventsList";
 
 export type DispatchArgumentTypes =
   | BaseEvent
@@ -19,148 +19,169 @@ export type DispatchArgumentTypes =
   | EventNotificationsAction;
 
 type BaseAction = {
-  action: EVENTS
+  action: EVENTS;
 };
 
 type BaseEvent = {
-  payload: null
+  payload: null;
 } & BaseAction;
 
 type EventErrorAction = {
-  payload: { event?: string; message?: string }
+  payload: { event?: string; message?: string };
 } & BaseAction;
 
 type EventSetLocalAction = {
-  payload: string
+  payload: string;
 } & BaseAction;
 
 type ActionById = {
-  payload: { id: string }
+  payload: { id: string };
 } & BaseAction;
 
 export interface ITrustbadge {
-  id: string
-  salesChannelRef: string,
-  children: ITrustbadgeChildren[]
+  id: string;
+  salesChannelRef: string;
+  children: ITrustbadgeChildren[];
 }
 export interface ITrustbadgeChildren {
-  tag?: string
+  tag?: string;
   attributes: {
-    [key: string]: { value?: string | number | boolean; attributeName?: string }
-  }
-  children?: ITrustbadgeChildren[]
+    [key: string]: {
+      value?: string | number | boolean;
+      attributeName?: string;
+    };
+  };
+  children?: ITrustbadgeChildren[];
 }
 
 type EventTrustbadgeAction = {
-  payload: ITrustbadge
+  payload: ITrustbadge;
 } & BaseAction;
 
 export interface IWidgets {
-  id: string
-  salesChannelRef: string
+  id: string;
+  salesChannelRef: string;
   children: Array<{
-    tag?: string
+    tag?: string;
     attributes?: {
-      [key: string]: { value?: string; attributeName?: string }
-    }
-    children: IWidgetsChildren[]
-  }>
+      [key: string]: { value?: string; attributeName?: string };
+    };
+    children: IWidgetsChildren[];
+  }>;
 }
 export interface IWidgetsChildren {
-  tag?: string
-  widgetId: string
-  applicationType: string
+  tag?: string;
+  widgetId: string;
+  applicationType: string;
   widgetLocation?: {
-    id: string
-    name: string
-  }
+    id: string;
+    name: string;
+  };
   extensions?: {
     product_star: {
-      tag: string
-    }
-  }
+      tag: string;
+    };
+  };
   attributes?: {
-    [key: string]: { value?: string; attributeName?: string }
-  }
+    [key: string]: { value?: string; attributeName?: string };
+  };
 }
 
 type EventWidgetsAction = {
-  payload: IWidgets
+  payload: IWidgets;
 } & BaseAction;
 
 type EventListChannelsAction = {
   payload: {
-    id: string
-    name: string
-    url: string
-    locale: string
-  }[]
+    id: string;
+    name: string;
+    url: string;
+    locale: string;
+  }[];
 } & BaseAction;
 
 export interface IMappedChannel {
-  eTrustedChannelRef: string
-  eTrustedLocale: string
-  eTrustedName: string
-  eTrustedUrl: string
-  eTrustedAccountRef: string
-  salesChannelRef: string
-  salesChannelLocale: string
-  salesChannelName: string
-  salesChannelUrl: string
+  eTrustedChannelRef: string;
+  eTrustedLocale: string;
+  eTrustedName: string;
+  eTrustedUrl: string;
+  eTrustedAccountRef: string;
+  salesChannelRef: string;
+  salesChannelLocale: string;
+  salesChannelName: string;
+  salesChannelUrl: string;
 }
 
 type EventListMappingChannelsAction = {
-  payload: IMappedChannel[]
+  payload: IMappedChannel[];
 } & BaseAction;
 
 export type EventChannelAction = {
-  payload: IMappedChannel | null
+  payload: IMappedChannel | null;
 } & BaseAction;
 
 type EventUseEstimatedDeliveryDateForChannelAction = {
-  payload: { id: string; isUseDateToSendReviewInvites?: boolean; active?: boolean; salesChannelRef: string }
+  payload: {
+    id: string;
+    isUseDateToSendReviewInvites?: boolean;
+    active?: boolean;
+    salesChannelRef: string;
+  };
 } & BaseAction;
 
 type EventUseEventsByOrderStatusForChannelAction = {
-  payload: { id: string; active: boolean; salesChannelRef: string }
+  payload: { id: string; active: boolean; salesChannelRef: string };
 } & BaseAction;
 
 type EventExportPreviousOrder = {
-  payload: { id: string; numberOfDays: number; salesChannelRef: string }
+  payload: { id: string; numberOfDays: number; salesChannelRef: string };
 } & BaseAction;
 
 type EventSetInformationOfSeyetemAction = {
   payload: {
-    nameOfSystem: string
-    versionNumberOfSystem: string
-    versionNumberOfPlugin: string
-    allowsEstimatedDeliveryDate: boolean
-  }
+    nameOfSystem: string;
+    versionNumberOfSystem: string;
+    versionNumberOfPlugin: string;
+    allowsEstimatedDeliveryDate: boolean;
+    allowsEventsByOrderStatus: boolean;
+    allowsSendReviewInvitesForPreviousOrders: boolean;
+    allowsSendReviewInvitesForProduct: boolean;
+    allowsEditIntegrationCode: boolean;
+    allowsSupportWidgets: boolean;
+    useVersionNumberOfConnector?: string;
+  };
 } & BaseAction;
 
 type EventCredentialsAction = {
   payload: {
-    clientId: string
-    clientSecret: string
-  }
+    clientId: string;
+    clientSecret: string;
+  };
 } & BaseAction;
 
 type EventLocationForWidgetAction = {
   payload: {
-    id: string
-    name: string
-  }[]
+    id: string;
+    name: string;
+  }[];
 } & BaseAction;
 
 type EventProductIdentifiersAction = {
   payload: {
-    id: string
-    name: string
-  }[]
+    id: string;
+    name: string;
+  }[];
+} & BaseAction;
+
+type EventOrderStatusesAction = {
+  payload: {
+    ID: string;
+    name: string;
+  }[];
 } & BaseAction;
 
 type EventNotificationsAction = {
-  payload: { event?: string; message?: string; status: 'error' | 'success' }
+  payload: { event?: string; message?: string; status: "error" | "success" };
 } & BaseAction;
 
 export interface EventsLibHandlers {
@@ -246,6 +267,11 @@ export interface EventsLibHandlers {
   ) => void;
   [EVENTS.SAVE_USE_EVENTS_BY_ORDER_STATUS_FOR_CHANNEL]?: (
     payload: EventUseEventsByOrderStatusForChannelAction
+  ) => void;
+
+  [EVENTS.GET_AVAILABLE_ORDER_STATUSES]?: (payload: ActionById) => void;
+  [EVENTS.SET_AVAILABLE_ORDER_STATUSES]?: (
+    payload: EventOrderStatusesAction
   ) => void;
 
   [EVENTS.EXPORT_PREVIOUS_ORDER]?: (payload: EventExportPreviousOrder) => void;
