@@ -39,10 +39,13 @@ type ActionById = {
 } & BaseAction;
 
 type StatusInviteAction = {
-  eTrustedChannelRef: string,
-  salesChannelRef: string,
-  activeStatus: {name: string, ID: string, event_type: string}
-}
+  eTrustedChannelRef: string;
+  salesChannelRef: string;
+  activeStatus: {
+    product?: { name: string; ID: string; event_type?: string };
+    service: { name: string; ID: string; event_type?: string };
+  };
+};
 
 export interface ITrustbadge {
   id: string;
@@ -285,12 +288,9 @@ export interface EventsLibHandlers {
     payload: EventExportPreviousOrder
   ) => void;
 
-  [EVENTS.GET_USE_ORDER_STATUS_FOR_SERVICE_INVITE]?:(payload: StatusInviteAction) => void;
-  [EVENTS.SET_USE_ORDER_STATUS_FOR_SERVICE_INVITE]?:(payload: StatusInviteAction) => void;
-  [EVENTS.SAVE_USE_ORDER_STATUS_FOR_SERVICE_INVITE]?:(payload: StatusInviteAction) => void;
-  [EVENTS.GET_USE_ORDER_STATUS_FOR_PRODUCT_INVITE]?:(payload: StatusInviteAction) => void;
-  [EVENTS.SET_USE_ORDER_STATUS_FOR_PRODUCT_INVITE]?:(payload: StatusInviteAction) => void;
-  [EVENTS.SAVE_USE_ORDER_STATUS_FOR_PRODUCT_INVITE]?:(payload: StatusInviteAction) => void;
+  [EVENTS.GET_USED_ORDER_STATUSES]?: (payload: StatusInviteAction) => void;
+  [EVENTS.SET_USED_ORDER_STATUSES]?: (payload: StatusInviteAction) => void;
+  [EVENTS.SAVE_USED_ORDER_STATUSES]?: (payload: StatusInviteAction) => void;
 
   [EVENTS.DISCONNECTED]?: (payload: BaseEvent) => void;
   [EVENTS.SET_DISCONNECTED]?: (payload: BaseEvent) => void;
