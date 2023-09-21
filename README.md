@@ -85,6 +85,158 @@ const handleClick = () => {
 
 ```
 
+## New events in version 2.0
+
+Add parameter `useVersionNumberOfConnector: '2.0'` to event `EVENTS.SET_INFORMATION_OF_SYSTEM` to use version 2.0
+
+#### Available order statuses: `[EVENTS.GET_AVAILABLE_ORDER_STATUSES],  [EVENTS.SET_AVAILABLE_ORDER_STATUSES]`
+
+Provide available order statuses for the given channel using the `EVENTS.SET_AVAILABLE_ORDER_STATUSES` event
+with
+values: `{action: EVENTS.SET_AVAILABLE_ORDER_STATUSES, payload: { ID: string; name: string; event_type?: string }[]} `
+in response to ` EVENTS.GET_AVAILABLE_ORDER_STATUSES`.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+
+const availableOrders = [
+  { name: 'Awaiting Payment', ID: '1', event_type: 'order_status_from_nameOfSystem' },
+  { name: 'Payment accepted', ID: '2' },
+  { name: 'Processing in progress', ID: '3', event_type: 'order_status_from_nameOfSystem' },
+  { name: 'Shipped', ID: '4' },
+  { name: 'Delivered', ID: '5' },
+  { name: 'Canceled', ID: '6' },
+  { name: 'Refunded', ID: '7' },
+];
+
+const unregisterEvents = registerEvents({
+  // ...
+  [EVENTS.GET_AVAILABLE_ORDER_STATUSES]: (event: {
+    action: "TS_GET_AVAILABLE_ORDER_STATUSES";
+    payload:  {id: string, eTrustedChannelRef: string, salesChannelRef: string }
+  }) => {
+    dispatchAction({
+      action: EVENTS.SET_AVAILABLE_ORDER_STATUSES,
+      payload: availableOrders,
+    });
+  },
+  // ...
+});
+```
+</details>
+
+#### Used order statuses: `[EVENTS.GET_USED_ORDER_STATUSES],  [EVENTS.SET_USED_ORDER_STATUSES]`
+
+Provide used order status for the given channel using the `EVENTS.SET_USED_ORDER_STATUSES` event
+with
+values: `{ action: EVENTS.SET_USED_ORDER_STATUSES, payload: {
+        activeStatus: {
+          product: { ID: string; name: string; event_type?: string },
+          service: { ID: string; name: string; event_type?: string },
+        },
+        id: string,
+        eTrustedChannelRef: string,
+        salesChannelRef: string
+      }} `
+in response to ` EVENTS.GET_USED_ORDER_STATUSES`.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+
+const unregisterEvents = registerEvents({
+  // ...
+  [EVENTS.GET_USED_ORDER_STATUSES]: (event: {
+    action: "TS_GET_USED_ORDER_STATUSES";
+    payload: {id: string, eTrustedChannelRef: string, salesChannelRef: string };
+  }) => {
+    dispatchAction({
+      action: EVENTS.SET_USED_ORDER_STATUSES,
+      payload: {
+        activeStatus: {
+          product: { 
+            name: 'Awaiting Payment', 
+            ID: '1', 
+            event_type: 'order_status_from_nameOfSystem' 
+          },
+          service: { 
+            name: 'Processing in progress', 
+            ID: '3',
+            event_type: 'order_status_from_nameOfSystem'
+          },
+        },
+        id: 'ID',
+        eTrustedChannelRef: 'eTrustedChannelRef',
+        salesChannelRef: 'salesChannelRef'
+      },
+    });
+  },
+  // ...
+});
+```
+</details>
+
+#### Save order statuses: `[EVENTS.SAVE_USED_ORDER_STATUSES]`
+
+Save used order status for the given channel using the `EVENTS.SAVE_USED_ORDER_STATUSES` event
+with
+values: `{
+        activeStatus: {
+          product: { ID: string; name: string; event_type?: string },
+          service: { ID: string; name: string; event_type?: string },
+        },
+        id: string,
+        eTrustedChannelRef: string,
+        salesChannelRef: string
+      }}`
+in response to ` EVENTS.SAVE_USED_ORDER_STATUSES`.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+
+const unregisterEvents = registerEvents({
+  // ...
+  [EVENTS.SAVE_USED_ORDER_STATUSES]: (event: {
+    action: "TS_SAVE_USED_ORDER_STATUSES";
+    payload: {
+      id: string, eTrustedChannelRef: string, salesChannelRef: string , activeStatus: {
+      product: { ID: string; name: string; event_type?: string },
+      service: { ID: string; name: string; event_type?: string },
+    }};
+  }) => {
+    dispatchAction({
+      action: EVENTS.SET_USED_ORDER_STATUSES,
+      payload: {
+        activeStatus: {
+          product: {
+            name: 'Awaiting Payment',
+            ID: '1',
+            event_type: 'order_status_from_nameOfSystem'
+          },
+          service: { 
+            name: 'Processing in progress',
+            ID: '3',
+            event_type: 'order_status_from_nameOfSystem'
+          },
+        },
+        id: 'ID',
+        eTrustedChannelRef: 'eTrustedChannelRef',
+        salesChannelRef: 'salesChannelRef'
+      },
+    });
+  },
+  // ...
+});
+```
+</details>
+
+## Version 1
+
 ### `EVENTS`
 
 EVENTS is a simple set of event string values ​​for communicating the Сonnector Layer with the Base Layer.
