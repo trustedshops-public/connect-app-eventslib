@@ -24,7 +24,7 @@ anchors:
 executors:
   building:
     docker:
-      - image: cimg/node:18.16
+      - image: cimg/node:20.8
 
 jobs:
   build:
