@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.2.0
+  node: circleci/node@5.3.0
   cloudfront-s3-deploy: trustedshops-public/cloudfront-s3-deploy@3.0.0
   semantic-release: trustedshops-public/semantic-release@6.0.0
   deterministic-zip: timo-reymann/deterministic-zip@1.0.0
@@ -24,7 +24,7 @@ anchors:
 executors:
   building:
     docker:
-      - image: cimg/node:21.5
+      - image: cimg/node:21.7
 
 jobs:
   build:
