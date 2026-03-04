@@ -8,12 +8,15 @@ export type DispatchArgumentTypes =
   | EventSetLocalAction
   | EventListChannelsAction
   | EventListMappingChannelsAction
+  | EventLocationForTrstdLoginAction
+  | EventTrstdLoginAction
   | EventTrustbadgeAction
   | EventWidgetsAction
   | EventChannelAction
   | EventLocationForWidgetAction
   | EventExportPreviousOrder
   | EventUseEstimatedDeliveryDateForChannelAction
+  | ITrstdLogin
   | ITrustbadge
   | EventUseEventsByOrderStatusForChannelAction
   | EventNotificationsAction;
@@ -46,6 +49,33 @@ type StatusInviteAction = {
     service: { name: string; ID: string; event_type?: string };
   };
 };
+
+export interface ITrstdLogin {
+  id: string;
+  salesChannelRef: string;
+  configuration: ITrstdLoginConfiguration[];
+}
+export interface ITrstdLoginConfiguration {
+  script?: {
+    tag?: string;
+    attributes?: {
+      [key: string]: { value?: string; attributeName?: string };
+    };
+  };
+  integration: {
+    applicationType: string;
+    tag?: string;
+    location: {
+      id: string;
+      name: string;
+    };
+    trstdLoginEnabled: boolean;
+  };
+}
+
+type EventTrstdLoginAction = {
+  payload: ITrstdLogin;
+} & BaseAction;
 
 export interface ITrustbadge {
   id: string;
@@ -157,6 +187,8 @@ type EventSetInformationOfSeyetemAction = {
     allowsSendReviewInvitesForProduct: boolean;
     allowsEditIntegrationCode: boolean;
     allowsSupportWidgets: boolean;
+    allowsTrustedCheckoutWidget: boolean;
+    allowsSupportTrstdLogin: boolean;
     useVersionNumberOfConnector?: string;
   };
 } & BaseAction;
@@ -169,6 +201,13 @@ type EventCredentialsAction = {
 } & BaseAction;
 
 type EventLocationForWidgetAction = {
+  payload: {
+    id: string;
+    name: string;
+  }[];
+} & BaseAction;
+
+type EventLocationForTrstdLoginAction = {
   payload: {
     id: string;
     name: string;
@@ -216,6 +255,20 @@ export interface EventsLibHandlers {
   [EVENTS.GET_MAPPED_CHANNELS]?: (payload: BaseEvent) => void;
   [EVENTS.SET_MAPPED_CHANNELS]?: (
     payload: EventListMappingChannelsAction
+  ) => void;
+
+  //trstdlogin
+  [EVENTS.GET_LOCATION_FOR_TRSTDLOGIN]?: (payload: ActionById) => void;
+  [EVENTS.SET_LOCATION_FOR_TRSTDLOGIN]?: (
+    payload: EventLocationForTrstdLoginAction
+  ) => void;
+
+  [EVENTS.GET_TRSTDLOGIN_CONFIGURATION_PROVIDED]?: (payload: ActionById) => void;
+  [EVENTS.SET_TRSTDLOGIN_CONFIGURATION_PROVIDED]?: (
+    payload: EventTrstdLoginAction
+  ) => void;
+  [EVENTS.SAVE_TRSTDLOGIN_CONFIGURATION]?: (
+    payload: EventTrstdLoginAction
   ) => void;
 
   //trustbadge
