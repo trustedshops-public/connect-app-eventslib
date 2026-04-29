@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/trustedshops-public/connect-app-eventslib/compare/1.1.0...1.1.1) (2026-04-29)
+
+
+### Bug Fixes
+
+* Added changes to for release to prod ([f0209c8](https://github.com/trustedshops-public/connect-app-eventslib/commit/f0209c80897b27d9c48c639e4711475e394e73f7))
+
 ## [1.1.0](https://github.com/trustedshops-public/connect-app-eventslib/compare/1.0.0...1.1.0) (2023-09-27)
 
 
