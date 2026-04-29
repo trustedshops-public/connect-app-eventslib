@@ -187,8 +187,8 @@ type EventSetInformationOfSeyetemAction = {
     allowsSendReviewInvitesForProduct: boolean;
     allowsEditIntegrationCode: boolean;
     allowsSupportWidgets: boolean;
-    allowsTrustedCheckoutWidget: boolean;
-    allowsSupportTrstdLogin: boolean;
+    allowsTrustedCheckoutWidget?: boolean;
+    allowsSupportTrstdLogin?: boolean;
     useVersionNumberOfConnector?: string;
   };
 } & BaseAction;
