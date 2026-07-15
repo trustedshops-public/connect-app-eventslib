@@ -11,6 +11,8 @@ export type DispatchArgumentTypes =
   | EventLocationForTrstdLoginAction
   | EventTrstdLoginAction
   | EventTrustbadgeAction
+  | EventStructuredMarkupSaveAction
+  | EventStructuredMarkupProvidedAction
   | EventWidgetsAction
   | EventChannelAction
   | EventLocationForWidgetAction
@@ -95,6 +97,21 @@ export interface ITrustbadgeChildren {
 
 type EventTrustbadgeAction = {
   payload: ITrustbadge;
+} & BaseAction;
+
+export interface IStructuredMarkup {
+  eTrustedChannelRef: string;
+  salesChannelRef: string;
+  tsId: string;
+  enabled: boolean;
+}
+
+type EventStructuredMarkupSaveAction = {
+  payload: IStructuredMarkup;
+} & BaseAction;
+
+type EventStructuredMarkupProvidedAction = {
+  payload: { structuredMarkupEnabled: boolean } | null;
 } & BaseAction;
 
 export interface IWidgets {
@@ -189,6 +206,7 @@ type EventSetInformationOfSeyetemAction = {
     allowsSupportWidgets: boolean;
     allowsTrustedCheckoutWidget?: boolean;
     allowsSupportTrstdLogin?: boolean;
+    allowsSupportStructuredMarkup?: boolean;
     useVersionNumberOfConnector?: string;
   };
 } & BaseAction;
@@ -280,6 +298,17 @@ export interface EventsLibHandlers {
   ) => void;
   [EVENTS.SAVE_TRUSTBADGE_CONFIGURATION]?: (
     payload: EventTrustbadgeAction
+  ) => void;
+
+  //structured markup
+  [EVENTS.GET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED]?: (
+    payload: ActionById
+  ) => void;
+  [EVENTS.SET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED]?: (
+    payload: EventStructuredMarkupProvidedAction
+  ) => void;
+  [EVENTS.SAVE_STRUCTURED_MARKUP_CONFIGURATION]?: (
+    payload: EventStructuredMarkupSaveAction
   ) => void;
 
   //widget
