@@ -235,6 +235,224 @@ const unregisterEvents = registerEvents({
 ```
 </details>
 
+## Login with Trusted Shops (TrstdLogin)
+
+These events are only used if the system supports Login with Trusted Shops. To enable this feature, set
+`allowsSupportTrstdLogin: true` in the payload of the `EVENTS.SET_INFORMATION_OF_SYSTEM` event.
+
+#### TrstdLogin location: `[EVENTS.GET_LOCATION_FOR_TRSTDLOGIN], [EVENTS.SET_LOCATION_FOR_TRSTDLOGIN]`
+
+Provide available positions for the TrstdLogin integration using the `EVENTS.SET_LOCATION_FOR_TRSTDLOGIN` event call
+with the values: `{action: EVENTS.SET_LOCATION_FOR_TRSTDLOGIN, payload: { id: string, name: string }[]}` in response
+to `EVENTS.GET_LOCATION_FOR_TRSTDLOGIN`.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+const trstdLoginLocations = [
+    {
+        id: 'login-page',
+        name: 'Login Page'
+    },
+    {
+        id: 'checkout-page',
+        name: 'Checkout Page',
+    },
+]
+
+const unregisterEvents = registerEvents({
+    // ...
+    [EVENTS.GET_LOCATION_FOR_TRSTDLOGIN]:
+        (event: {
+            action: 'TS_GET_LOCATION_FOR_TRSTDLOGIN',
+            payload: {
+                id: eTrustedChannelRef,
+                salesChannelRef: string
+            }
+        }) => {
+            dispatchAction({
+                action: EVENTS.SET_LOCATION_FOR_TRSTDLOGIN,
+                payload: trstdLoginLocations,
+            })
+        },
+    // ...
+})
+```
+
+</details>
+
+#### TrstdLogin configuration: `[EVENTS.GET_TRSTDLOGIN_CONFIGURATION_PROVIDED], [EVENTS.SET_TRSTDLOGIN_CONFIGURATION_PROVIDED]`
+
+Provide the previously saved TrstdLogin configuration using the `EVENTS.SET_TRSTDLOGIN_CONFIGURATION_PROVIDED` event
+call with the values: `{action: EVENTS.SET_TRSTDLOGIN_CONFIGURATION_PROVIDED, payload: ITrstdLogin}` in response
+to `EVENTS.GET_TRSTDLOGIN_CONFIGURATION_PROVIDED`.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+const unregisterEvents = registerEvents({
+    // ...
+    [EVENTS.GET_TRSTDLOGIN_CONFIGURATION_PROVIDED]:
+        (event: {
+            action: 'TS_GET_TRSTDLOGIN_CONFIGURATION_PROVIDED'
+            payload: {
+                id: eTrustedChannelRef,
+                salesChannelRef: string
+            }
+        }) => {
+            dispatchAction({
+                action: EVENTS.SET_TRSTDLOGIN_CONFIGURATION_PROVIDED,
+                payload: trstdLoginData as ITrstdLogin,
+            })
+        },
+    // ...
+})
+```
+
+</details>
+
+<details>
+<summary>interface ITrstdLogin</summary>
+
+```typescript
+interface ITrstdLogin {
+    id: string
+    salesChannelRef: string
+    configuration: ITrstdLoginConfiguration[]
+}
+
+interface ITrstdLoginConfiguration {
+    script?: {
+        tag?: string
+        attributes?: {
+            [key: string]: {
+                value?: string;
+                attributeName?: string
+            }
+        }
+    }
+    integration: {
+        applicationType: string
+        tag?: string
+        location: {
+            id: string
+            name: string
+        }
+        trstdLoginEnabled: boolean
+    }
+}
+```
+
+</details>
+
+#### Save TrstdLogin configuration: `[EVENTS.SAVE_TRSTDLOGIN_CONFIGURATION]`
+
+Save the configured TrstdLogin configuration for this channel from the `EVENTS.SAVE_TRSTDLOGIN_CONFIGURATION` event.
+After successful save, call the `EVENTS.SET_TRSTDLOGIN_CONFIGURATION_PROVIDED` and `EVENTS.NOTIFICATION` events.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+const unregisterEvents = registerEvents({
+    // ...
+    [EVENTS.SAVE_TRSTDLOGIN_CONFIGURATION]:
+        (event: {
+            action: 'TS_SAVE_TRSTDLOGIN_CONFIGURATION'
+            payload: ITrstdLogin
+        }) => {
+            // Saving payload in db
+            dispatchAction({
+                action: EVENTS.SET_TRSTDLOGIN_CONFIGURATION_PROVIDED,
+                payload: trstdLoginData as ITrstdLogin,
+            })
+        },
+    // ...
+})
+```
+
+</details>
+
+## Structured Markup (Rich Snippets)
+
+These events are only used if the system supports Structured Markup. To enable this feature, set
+`allowsSupportStructuredMarkup: true` in the payload of the `EVENTS.SET_INFORMATION_OF_SYSTEM` event.
+
+#### Structured Markup: `[EVENTS.GET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED], [EVENTS.SET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED]`
+
+Provide the previously saved Structured Markup configuration using
+the `EVENTS.SET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED` event call with the
+values: `{action: EVENTS.SET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED, payload: { structuredMarkupEnabled: boolean } | null}`
+in response to `EVENTS.GET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED`.
+
+:information_source: If no Structured Markup configuration has been saved yet in the Base Layer, send `payload: null`.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+const unregisterEvents = registerEvents({
+    // ...
+    [EVENTS.GET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED]:
+        (event: {
+            action: 'TS_GET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED'
+            payload: {
+                id: eTrustedChannelRef,
+                salesChannelRef: string
+            }
+        }) => {
+            dispatchAction({
+                action: EVENTS.SET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED,
+                payload: {
+                    structuredMarkupEnabled: true,
+                },
+            })
+        },
+    // ...
+})
+```
+
+</details>
+
+#### Save Structured Markup: `[EVENTS.SAVE_STRUCTURED_MARKUP_CONFIGURATION]`
+
+Save the Structured Markup configuration for this channel from the `EVENTS.SAVE_STRUCTURED_MARKUP_CONFIGURATION` event.
+After successful save, call the `EVENTS.SET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED` and `EVENTS.NOTIFICATION` events.
+
+<details>
+<summary>baseLayer.ts</summary>
+
+```typescript
+interface IStructuredMarkup {
+    eTrustedChannelRef: string
+    salesChannelRef: string
+    tsId: string
+    enabled: boolean
+}
+
+const unregisterEvents = registerEvents({
+    // ...
+    [EVENTS.SAVE_STRUCTURED_MARKUP_CONFIGURATION]:
+        (event: {
+            action: 'TS_SAVE_STRUCTURED_MARKUP_CONFIGURATION'
+            payload: IStructuredMarkup
+        }) => {
+            // Saving payload in db
+            dispatchAction({
+                action: EVENTS.SET_STRUCTURED_MARKUP_CONFIGURATION_PROVIDED,
+                payload: {
+                    structuredMarkupEnabled: event.payload.enabled,
+                },
+            })
+        },
+    // ...
+})
+```
+
+</details>
+
 ## Version 1
 
 ### `EVENTS`
@@ -1200,7 +1418,11 @@ const unregisterEvents = registerEvents({
                     allowsSendReviewInvitesForPreviousOrders: boolean,
                     allowsSendReviewInvitesForProduct: boolean,
                     allowsEditIntegrationCode: boolean,
-                    allowsSupportWidgets: boolean
+                    allowsSupportWidgets: boolean,
+                    allowsTrustedCheckoutWidget?: boolean,
+                    allowsSupportTrstdLogin?: boolean,
+                    allowsSupportStructuredMarkup?: boolean,
+                    useVersionNumberOfConnector?: string
                 }
             })
         },
@@ -1216,10 +1438,19 @@ is displayed (the case will allow you to integrate into all existing systems)
 If the parameter `allowsSendReviewInvitesForPreviousOrders` is false, then the export-block is hidden. If true, then
 display
 
+If the parameter `allowsSupportTrstdLogin` is true, the Login with Trusted Shops (TrstdLogin) section is displayed in
+the connector and the [TrstdLogin events](#login-with-trusted-shops-trstdlogin) are used.
+
+If the parameter `allowsSupportStructuredMarkup` is true, the Structured Markup section is displayed in the connector
+and the [Structured Markup events](#structured-markup-rich-snippets) are used.
+
+Use the parameter `useVersionNumberOfConnector: '2.0'` to enable the version 2.0 events (see
+[New events in version 2.0](#new-events-in-version-20))
+
 #### Notifications: [EVENTS.NOTIFICATION]
 
 In data save events such
-as `EVENTS.SAVE_CREDENTIALS, SAVE_MAPPED_CHANNEL, EVENTS.SAVE_TRUSTBADGE_CONFIGURATION, EVENTS.ACTIVATE_PRODUCT_REVIEW_FOR_CHANNEL, EVENTS.DEACTIVATE_PRODUCT_REVIEW_FOR_CHANNEL, SAVE_WIDGET_CHANGES, SAVE_USE_ESTIMATED_DELIVERY_DATE_FOR_CHANNEL`
+as `EVENTS.SAVE_CREDENTIALS, SAVE_MAPPED_CHANNEL, EVENTS.SAVE_TRUSTBADGE_CONFIGURATION, EVENTS.SAVE_TRSTDLOGIN_CONFIGURATION, EVENTS.SAVE_STRUCTURED_MARKUP_CONFIGURATION, EVENTS.ACTIVATE_PRODUCT_REVIEW_FOR_CHANNEL, EVENTS.DEACTIVATE_PRODUCT_REVIEW_FOR_CHANNEL, SAVE_WIDGET_CHANGES, SAVE_USE_ESTIMATED_DELIVERY_DATE_FOR_CHANNEL, SAVE_USE_EVENTS_BY_ORDER_STATUS_FOR_CHANNEL, SAVE_USED_ORDER_STATUSES`
 add a message about successful or failed data saving using events `EVENTS.NOTIFICATION` with
 values: `{action: EVENTS.NOTIFICATION}`
 
