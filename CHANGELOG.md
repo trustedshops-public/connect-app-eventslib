@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/trustedshops-public/connect-app-eventslib/compare/1.1.1...1.2.0) (2026-08-04)
+
+
+### Features
+
+* Add structured markup configuration events and types ([feee3bb](https://github.com/trustedshops-public/connect-app-eventslib/commit/feee3bbc837dd0a2787ee9be9aa4d9212a5f8380))
+
 ## [1.1.1](https://github.com/trustedshops-public/connect-app-eventslib/compare/1.1.0...1.1.1) (2026-04-29)
 
 
