@@ -56,6 +56,19 @@ export interface ITrstdLogin {
   id: string;
   salesChannelRef: string;
   configuration: ITrstdLoginConfiguration[];
+  /**
+   * Shop-global placement overrides, supported when the base layer reports
+   * `allowsSupportTrstdLoginCustomization` (currently Shopify only). Keys mirror
+   * the shop system's placement setting ids.
+   */
+  customization?: ITrstdLoginCustomization;
+}
+
+export interface ITrstdLoginCustomization {
+  target_selector?: string;
+  position_desktop?: string;
+  target_selector_mobile?: string;
+  position_mobile?: string;
 }
 export interface ITrstdLoginConfiguration {
   script?: {
@@ -207,6 +220,12 @@ type EventSetInformationOfSeyetemAction = {
     allowsTrustedCheckoutWidget?: boolean;
     allowsSupportTrstdLogin?: boolean;
     allowsSupportStructuredMarkup?: boolean;
+    /** Placement customization (CSS selector + position) is configured in the connector instead of the shop's theme tooling. */
+    allowsSupportTrstdLoginCustomization?: boolean;
+    /** Deep link that opens the shop's theme tooling with the app embed pre-activated (currently Shopify only). */
+    appEmbedDeepLink?: string;
+    /** Detected activation state of the app embed on the published theme; undefined when unknown (currently Shopify only). */
+    appEmbedActivated?: boolean;
     useVersionNumberOfConnector?: string;
   };
 } & BaseAction;
