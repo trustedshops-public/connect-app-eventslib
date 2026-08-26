@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/trustedshops-public/connect-app-eventslib/compare/1.2.0...1.2.1) (2026-08-26)
+
+
+### Bug Fixes
+
+* TPSCON-4507 ([ec84b44](https://github.com/trustedshops-public/connect-app-eventslib/commit/ec84b444f29ff7a256dc01a59bbef062edf95601))
+
 ## [1.2.0](https://github.com/trustedshops-public/connect-app-eventslib/compare/1.1.1...1.2.0) (2026-08-04)
 
 
