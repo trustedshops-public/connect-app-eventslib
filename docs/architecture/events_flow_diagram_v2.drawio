@@ -12,7 +12,7 @@
         </mxCell> 
         <mxCell id="LSZJkecF79FRnBt_k18C-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-20" y="20" width="1240" height="8110" as="geometry" />
-        </mxCell>
+        </mxCell> 
         <mxCell id="LSZJkecF79FRnBt_k18C-13" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Helvetica;fontSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
           <mxGeometry x="80" y="120" width="560" height="7980" as="geometry" />
         </mxCell>
